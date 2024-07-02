@@ -95,8 +95,8 @@
   .chat-container {
     display: flex;
     flex-direction: column;
-    height: 90vh;
-    max-width: 80%;
+    height: 100vh;
+    max-width: 100%;
     margin: 0 auto;
     background-color: #f9f9f9;
     border: 1px solid #ccc;

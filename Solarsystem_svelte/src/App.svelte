@@ -34,15 +34,20 @@
   }
 
   window.addEventListener('mouseup', handleMouseUp);
+
+  // Function to get current route
+  function getCurrentRoute() {
+    return window.location.hash;
+  }
 </script>
 
 <main>
   <h1>Learn Solar System</h1>
   <nav>
-    <a href="/#/">Home</a>
-    <a href="/#/explore/">Explore</a>
-    <a href="/#/basics/">Ask AI Chat Bot</a>
-    <a href="/#/quiz/">Quiz</a>
+    <a href="/#/" class:selected="{getCurrentRoute() === '#/' ? 'active' : ''}">Home</a>
+    <a href="/#/explore/" class:selected="{getCurrentRoute().startsWith('#/explore') ? 'active' : ''}">Explore</a>
+    <a href="/#/basics/" class:selected="{getCurrentRoute().startsWith('#/basics') ? 'active' : ''}">Ask AI Chat Bot</a>
+    <a href="/#/quiz/" class:selected="{getCurrentRoute().startsWith('#/quiz') ? 'active' : ''}">Quiz</a>
   </nav>
   <Router {routes} />
   {#if showPopup}
@@ -53,6 +58,17 @@
 <style>
   main { text-align: left; padding: 2rem; }
   nav { margin-bottom: 1rem; }
-  nav a { margin: 0 1rem; text-decoration: none; cursor: pointer; color: #0070f3; }
-  nav a:hover { text-decoration: underline; }
+  nav a {
+    margin: 0 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    color: #0070f3;
+    font-size: 1.2rem;
+  }
+  nav a:hover, nav a.active {
+    text-decoration: underline;
+  }
+  nav a.active {
+    border-bottom: 2px solid #0070f3;
+  }
 </style>
