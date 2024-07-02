@@ -2,15 +2,15 @@
     import { onMount } from 'svelte';
     import { Application } from '@splinetool/runtime';
   
-    let canvas;
+    let canvas1;
   
     onMount(() => {
-      const app = new Application(canvas);
-      app.load('https://prod.spline.design/ZXeQ8yYS8Se2gmms/scene.splinecode'); //Spline scene URL
+      const app = new Application(canvas1);
+      app.load('https://prod.spline.design/9z98vmHvo8BizvjS/scene.splinecode'); //Spline scene URL
     });
   </script>
   
-  <canvas bind:this={canvas} width="800" height="600"></canvas>
+  <canvas bind:this={canvas1} width="1000" height="600"></canvas>
   
   <style>
     canvas {

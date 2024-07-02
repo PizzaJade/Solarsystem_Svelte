@@ -6,6 +6,7 @@
     const API_URL = 'https://api.nasa.gov/planetary/apod?api_key=EefLU0miJpovfcNmDQheGkcGHdleDgUH9HKFOvfH';
     let payload;
     let canvas;
+    //let canvas1;
     let showModal = false;
   
     async function fetchAPOD() {
@@ -24,6 +25,12 @@
       }
     }
   
+    //onMount(() => {
+      //fetchAPOD();
+      //const app = new Application(canvas1);
+      //app.load('https://prod.spline.design/9z98vmHvo8BizvjS/scene.splinecode');
+    //});
+
     onMount(() => {
       fetchAPOD();
       const app = new Application(canvas);
@@ -36,8 +43,23 @@
   </script>
   
   <main>
-    <section class="apod-canvas">
-      <canvas bind:this={canvas} id="canvas3d" width="400" height="100"></canvas>
+    <!---<section class="apod-canvas">
+      <canvas bind:this={canvas1} id="canvas3d" width="400" height="100"></canvas>
+      <p>Explore the Solar System!</p>
+    </section>-->
+
+    <section class="welcome-content">
+      
+      <h2>Welcome to our Astronomy Exploration Site!</h2>
+      <p>
+
+        Embark on a cosmic journey as you explore the fascinating world of astronomy and our solar system. Whether you're a seasoned stargazer or a curious novice, our interactive platform is designed to enhance your understanding of the universe.
+        
+        To begin your adventure, simply select a word related to astronomy or the solar system.</p>
+
+        <p>For example, you can choose "Nebula" to dive into the mystifying clouds of gas and dust that birth stars. Each selection will unveil a wealth of information, stunning visuals, and engaging content to help you discover the wonders of the cosmos.</p>
+
+        <p>Start exploring now and let the stars be your guide!</p>
     </section>
   
     {#if payload}
@@ -46,6 +68,7 @@
           <h1>Astronomy Picture of the Day</h1>
           <h2>{payload.title}</h2>
           <p>{payload.date}</p>
+          <h3>Explaination:</h3>
           <p class="apod-explanation">{payload.explanation}</p>
         </div>
         <div class="apod-image">
@@ -70,6 +93,15 @@
         </div>
       </div>
     {/if}
+
+    
+    
+    
+    <section class="apod-canvas">
+      <canvas bind:this={canvas} id="canvas3d" width="300" height="100"></canvas>
+      <p>Here is a cool Nebula 3D Model! Feel free to move it with your mouse.</p>
+    </section>
+
   </main>
   
   <style>
@@ -179,7 +211,7 @@
     canvas {
       width: 100%;
       height: 100%;
-      border: 1px solid #ccc;
+      border: 1px solid #0a0707;
     }
   
     .modal {
