@@ -6,6 +6,7 @@
     const API_URL = 'https://api.nasa.gov/planetary/apod?api_key=EefLU0miJpovfcNmDQheGkcGHdleDgUH9HKFOvfH';
     let payload;
     let canvas;
+    let showModal = false;
   
     async function fetchAPOD() {
       try {
@@ -28,6 +29,10 @@
       const app = new Application(canvas);
       app.load('https://prod.spline.design/eAmDO6WNFznsIaZZ/scene.splinecode');
     });
+  
+    function toggleModal() {
+      showModal = !showModal;
+    }
   </script>
   
   <main>
@@ -36,15 +41,33 @@
     </section>
   
     {#if payload}
-      <section>
-        <h2>{payload.title}</h2>
-        <p>{payload.date}</p>
-        <p>{payload.explanation}</p>
-        <img src={payload.url} alt={payload.title} />
+      <section class="apod-container">
+        <div class="apod-text">
+          <h1>Astronomy Picture of the Day</h1>
+          <h2>{payload.title}</h2>
+          <p>{payload.date}</p>
+          <p>{payload.explanation}</p>
+        </div>
+        <div class="apod-image">
+          {#if payload.media_type === 'image'}
+            <img src={payload.url} alt={payload.title} tabindex="0" role="button" aria-label="View full image" on:click={toggleModal} on:keydown={(e) => e.key === 'Enter' && toggleModal()} />
+          {:else if payload.media_type === 'video'}
+            <iframe src={payload.url} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="{payload.title}" aria-label="NASA video"></iframe>
+          {/if}
+        </div>
       </section>
     {:else}
       <div class="flex center-x-y">
         <Loader />
+      </div>
+    {/if}
+  
+    {#if showModal}
+      <div class="modal" role="dialog" aria-labelledby="modal-title" aria-describedby="modal-description">
+        <div class="modal-content">
+          <button class="close" aria-label="Close modal" on:click={toggleModal}>&times;</button>
+          <img src={payload.url} alt={payload.title} class="modal-image" id="modal-image" />
+        </div>
       </div>
     {/if}
   </main>
@@ -61,7 +84,7 @@
   
     main {
       padding: 1rem;
-      text-align: center;
+      text-align: left;
       color: white;
     }
   
@@ -72,7 +95,31 @@
       margin-bottom: 2rem;
     }
   
+    .apod-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin-top: 1rem;
+    }
+  
+    .apod-text {
+      flex: 1;
+      margin-right: 1rem;
+    }
+  
+    .apod-image {
+      max-width: 400px;
+      flex-shrink: 0;
+    }
+  
     img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  
+    iframe {
       max-width: 100%;
       height: auto;
       border-radius: 8px;
@@ -96,12 +143,25 @@
     }
   
     button:hover {
-      background-color: #1c86ee;
+      background-color: #5385b6;
     }
   
     @media (max-width: 600px) {
       .buttons-container {
         grid-template-columns: 1fr;
+      }
+  
+      .apod-container {
+        flex-direction: column;
+      }
+  
+      .apod-text {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+  
+      .apod-image {
+        max-width: 100%;
       }
     }
   
@@ -110,4 +170,51 @@
       height: 100%;
       border: 1px solid #ccc;
     }
+  
+    .modal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+  
+    .modal-content {
+      position: relative;
+      margin: auto;
+      padding: 0;
+      max-width: 90%;
+      max-height: 90%;
+    }
+  
+    .modal-image {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      color: #fff;
+      font-size: 35px;
+      font-weight: bold;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+    }
+  
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
   </style>
+  

@@ -1,33 +1,56 @@
+<!-- src/routes/Explore.svelte -->
 <script>
-  import { URL, generateURL } from "./basics/constant.js";
+  import { onMount } from 'svelte';
 
-  let payload;
-  let searchValue;
+  let payload = '';
+  let searchValue = '';
   let payloadEmpty = false;
+  let loading = false;
+  let error = '';
+  let images = [];
 
   async function fetchData(url) {
     try {
+      loading = true;
+      error = '';
       const response = await fetch(url);
       const data = await response.json();
-
-      payload = data.parse?.text; // "<h1>...</h1><p>...</p>..." oder undefined
-
-      if (payload) {
-        payloadEmpty = false;
+      const page = Object.values(data.query.pages)[0];
+      if (page.extract) {
+        payload = page.extract;
+        if (page.thumbnail) {
+          images = [page.thumbnail.source];
+        } else {
+          images = [];
+        }
       } else {
-        payloadEmpty = true;
+        payload = 'No summary available.';
+        images = [];
       }
+      payloadEmpty = !payload;
 
       console.log(payload);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      error = 'Error fetching data';
+      console.error(err);
+    } finally {
+      loading = false;
     }
   }
 
   async function search() {
-    let url = generateURL(searchValue);
+    let url = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages&exintro&explaintext&format=json&origin=*&titles=${searchValue}&piprop=thumbnail&pithumbsize=300`;
     fetchData(url);
   }
+
+  onMount(() => {
+    const params = new URLSearchParams(window.location.search);
+    const query = params.get('query');
+    if (query) {
+      searchValue = query;
+      search();
+    }
+  });
 </script>
 
 <main>
@@ -41,21 +64,19 @@
     on:change={search}
   />
 
-  {#if payload}
-    {#await payload}
-      <div aria-busy={true} style="width: 100%; height: 300px" class="debug">
-        Loading...
-      </div>
-    {:then}
-      <div class="content">
-        {@html payload.replaceAll(
-          /href="([^"]+)"/g,
-          'href="https://en.wikipedia.org$1"'
-        )}
-      </div>
-    {:catch error}
-      <p class="error">{error.message}</p>
-    {/await}
+  {#if loading}
+    <div aria-busy={true} style="width: 100%; height: 300px" class="debug">
+      Loading...
+    </div>
+  {:else if error}
+    <p class="error">{error}</p>
+  {:else if payload}
+    <div class="content">
+      {#each images as image}
+        <img src={image} alt="Related image" />
+      {/each}
+      <p>{payload}</p>
+    </div>
   {:else if payloadEmpty}
     <p class="error">No results found for {searchValue}</p>
   {/if}
@@ -81,5 +102,11 @@
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
   }
 </style>
