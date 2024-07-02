@@ -35,7 +35,6 @@
 
   window.addEventListener('mouseup', handleMouseUp);
 
-  // Function to get current route
   function getCurrentRoute() {
     return window.location.hash;
   }
@@ -47,7 +46,7 @@
     <a href="/#/" class:selected="{getCurrentRoute() === '#/' ? 'active' : ''}">Home</a>
     <a href="/#/explore/" class:selected="{getCurrentRoute().startsWith('#/explore') ? 'active' : ''}">Explore</a>
     <a href="/#/basics/" class:selected="{getCurrentRoute().startsWith('#/basics') ? 'active' : ''}">Ask AI Chat Bot</a>
-    <a href="/#/quiz/" class:selected="{getCurrentRoute().startsWith('#/quiz') ? 'active' : ''}">Quiz</a>
+    
   </nav>
   <Router {routes} />
   {#if showPopup}
@@ -70,5 +69,16 @@
   }
   nav a.active {
     border-bottom: 2px solid #0070f3;
+  }
+
+  @media (max-width: 600px) {
+    nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    nav a {
+      margin-bottom: 0.5rem;
+    }
   }
 </style>
