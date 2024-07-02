@@ -3,7 +3,6 @@
   import Home from './routes/Home.svelte';
   import Explore from './routes/Explore.svelte';
   import Basics from './routes/Basics.svelte';
-  import Quiz from './routes/Quiz.svelte';
   import Popup from './components/Popup.svelte';
   import { push } from 'svelte-spa-router';
 

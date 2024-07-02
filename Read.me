@@ -1,0 +1,55 @@
+Doku der "Learn Solar System" Svelte App
+
+Die "Learn Solar System" App ist eine interaktive Anwendung, die den Nutzern ermöglicht, das Sonnensystem zu erkunden und mehr über astronomische Phänomene zu lernen. Die App besteht aus drei Hauptbereichen: Startseite, Übersicht und AI Chat Bot. Außerdem gibt es einen Dark- und Light-Mode, der über ein Sonnen-/Mond-Symbol im Header umgeschaltet werden kann.
+
+Allgemeine Funktionen
+Drei Unterseiten: Startseite, Übersicht und AI Chat Bot.
+Dark- und Light-Mode: Umschaltbar über ein Sonnen-/Mond-Symbol im Header.
+Responsives Design: Anpassbar an verschiedene Bildschirmgrößen.
+Implementierungsdetails
+Routing: Die Unterseiten sind mit dem svelte-spa-router verbunden.
+Dark-Mode-Implementierung:
+Der Dark-Mode-Trigger ändert die Hintergrund- und Schriftfarben.
+Boxen, Buttons und andere Elemente ändern ihre Farben durch Transparenz.
+Problem: Beim Zurückkehren zur "Startseite" wird die Seite neu geladen und der Modus wird nicht beibehalten. Dies wurde teilweise gelöst durch Modifikationen im Router, bleibt aber beim ersten Aufruf der Seite ungelöst.
+Responsiveness
+Erreicht durch die Verwendung von max-width-Eigenschaften.
+Footer Legende
+Eine Legende im Footer erklärt dem Nutzer die verschiedenen verwendeten Icons.
+Startseite
+
+Inhalt:
+Buttons zur Navigation zu "Spiel" und "Übersicht" zusätzlich zur Navigationsleiste.
+Integration mit der Pexels API (https://www.pexels.com/api/documentation/): Durch Klicken auf den Button wird ein Bild von Pexels mit dem Suchbegriff "Dino" geladen.
+Übersichtsseite
+
+Inhalt:
+Informationskarten basierend auf den Daten aus dinosaur_data.js mit Bildern aus dem Ordner public/images.
+Interaktionen:
+Sortierfunktion durch Klicken auf Icons.
+Klicken auf Karten, um einen zufälligen Fakt in einem separaten Feld oben rechts anzuzeigen.
+Markieren von astronomischen Begriffen, um entweder eine kurze Beschreibung in einem Popup zu erhalten oder direkt zu den Wikipedia-Seiten dieser Begriffe weitergeleitet zu werden.
+Pop-up Funktionen
+Kurzbeschreibung: Nutzer können eine kurze Beschreibung des markierten Begriffs anzeigen lassen.
+Wikipedia: Nutzer können den vollständigen Artikel auf Wikipedia lesen.
+AI Chat Bot: Nutzer können den Begriff in den AI Chat Bot einfügen und weitere Informationen erhalten.
+
+AI Chat Bot Seite
+
+Funktion: Der Chat Bot ermöglicht es Nutzern, Fragen über Astronomie und das Sonnensystem zu stellen.
+Hinweis: Der Chat Bot funktioniert derzeit nicht und ist in Entwicklung.
+Implementierungsdetails für AI Chat Bot
+Chat Interaktion:
+Nutzer können Fragen stellen, die an den OpenAI API gesendet werden.
+Antworten werden in Echtzeit angezeigt.
+Vorgehen:
+Nutzung der OpenAI API zur Verarbeitung der Nutzerfragen.
+Implementierung von SSE zur Echtzeitkommunikation.
+Quellen und Ressourcen
+
+NASA API: https://api.nasa.gov
+Spline Design Community: https://app.spline.design/community/search?query=planet&sort=trending
+OpenAI ChatGPT und Whisper APIs: https://openai.com/index/introducing-chatgpt-and-whisper-apis/
+Framework PicoCSS: https://picocss.com
+Particle Nebula 3D Source: https://app.spline.design/community/file/cea96ce0-da30-46cc-bd5c-dc73a6497abd
+
