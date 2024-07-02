@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ChatMessage from './basics/ChatMessages.svelte';
-  import ChatCompletionRequestMessage from 'openai';
+	import type { ChatCompletionRequestMessage } from 'openai';
 	import { SSE } from 'sse.js';
 
 	let query: string = '';
@@ -8,8 +8,6 @@
 	let loading: boolean = false;
 	let chatMessages: ChatCompletionRequestMessage[] = [];
 	let scrollToDiv: HTMLDivElement;
-
-	const astronomyTerms = ["nebula", "galaxy", "black hole", "supernova", "comet"];
 
 	function scrollToBottom() {
 		setTimeout(function () {
@@ -24,7 +22,6 @@
 		const eventSource = new SSE('/api/chat', {
 			headers: {
 				'Content-Type': 'application/json',
-				// Add your authentication token or other headers here
 				'Authorization': 'Bearer YOUR_API_TOKEN_HERE'
 			},
 			payload: JSON.stringify({ messages: chatMessages })
@@ -64,25 +61,64 @@
 		answer = '';
 		console.error(err);
 	}
-
-	const handleTermClick = (term: string) => {
-		query = `Tell me about ${term}.`;
-		handleSubmit();
-	}
 </script>
+<main>
+<div class="container">
+	<div class="header">
+		<h1>This is the AI Chat Bot</h1>
+		<p>Ask anything about astronomy or the solar system to learn more about it.</p>
+	</div>
+	<div class="chat-box">
+		<div class="message-container">
+			<ChatMessage type="assistant" message="Hello, ask me anything you want!" />
+			{#each chatMessages as message}
+				<ChatMessage type={message.role} message={message.content} />
+			{/each}
+			{#if answer}
+				<ChatMessage type="assistant" message={answer} />
+			{/if}
+			{#if loading}
+				<ChatMessage type="assistant" message="Loading.." />
+			{/if}
+		</div>
+		<div bind:this={scrollToDiv}></div>
+	</div>
+	<form class="form" on:submit|preventDefault={handleSubmit}>
+		<input type="text" class="input" bind:value={query} placeholder="Type your message here..." />
+		<button type="submit" class="button">Send</button>
+	</form>
+</div>
+</main>
+
+
+<footer>
+  <section class="footer-content">
+      <h2>Impressum</h2>
+    
+  </section>
+  <section class="footer-content">
+      <h2>Datenschutz</h2>
+      
+  </section>
+  <section class="footer-content">
+      <h2>Owner Information</h2>
+     
+  </section>
+</footer>
 
 <style>
 	.container {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		align-items: flex-start;
 		width: 100%;
 		padding: 1rem 2rem;
 		gap: 1rem;
 	}
 
 	.header {
-		text-align: center;
+		text-align: left;
+		width: 100%;
 	}
 
 	.header h1 {
@@ -93,24 +129,6 @@
 	.header p {
 		font-size: 1rem;
 		font-style: italic;
-	}
-
-	.terms {
-		display: flex;
-		gap: 0.5rem;
-		margin: 1rem 0;
-	}
-
-	.term-button {
-		padding: 0.5rem 1rem;
-		border: 1px solid #ccc;
-		background: none;
-		cursor: pointer;
-		border-radius: 0.25rem;
-	}
-
-	.term-button:hover {
-		background-color: #f0f0f0;
 	}
 
 	.chat-box {
@@ -127,6 +145,12 @@
 		color: white;
 	}
 
+	.message-container {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
 	.form {
 		display: flex;
 		width: 100%;
@@ -141,6 +165,7 @@
 		padding: 0.5rem;
 		border: 1px solid #ccc;
 		border-radius: 0.25rem;
+		color: black;
 	}
 
 	.button {
@@ -155,35 +180,15 @@
 	.button:hover {
 		background-color: #0056b3;
 	}
+
+  footer {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      text-align: left;
+  }
+
+  .footer-content {
+      margin-bottom: 1rem;
+  }
 </style>
 
-<div class="container">
-	<div class="header">
-		<h1>Welcome to our Astronomy Exploration Site!</h1>
-		<p>Select a word related to astronomy or the solar system to learn more about it.</p>
-	</div>
-	<div class="terms">
-		{#each astronomyTerms as term}
-			<button class="term-button" on:click={() => handleTermClick(term)}>{term}</button>
-		{/each}
-	</div>
-	<div class="chat-box">
-		<div class="flex flex-col gap-2">
-			<ChatMessage type="assistant" message="Hello, ask me anything you want!" />
-			{#each chatMessages as message}
-				<ChatMessage type={message.role} message={message.content} />
-			{/each}
-			{#if answer}
-				<ChatMessage type="assistant" message={answer} />
-			{/if}
-			{#if loading}
-				<ChatMessage type="assistant" message="Loading.." />
-			{/if}
-		</div>
-		<div bind:this={scrollToDiv}></div>
-	</div>
-	<form class="form" on:submit|preventDefault={handleSubmit}>
-		<input type="text" class="input" bind:value={query} />
-		<button type="submit" class="button">Send</button>
-	</form>
-</div>

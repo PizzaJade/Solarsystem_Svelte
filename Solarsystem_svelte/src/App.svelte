@@ -11,7 +11,7 @@
     '/': Home,
     '/explore/': Explore,
     '/basics': Basics,
-    '/quiz': Quiz,
+
   };
 
   let selectedText = '';

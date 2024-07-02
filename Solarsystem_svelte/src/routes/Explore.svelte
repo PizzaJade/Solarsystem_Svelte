@@ -40,10 +40,6 @@
     }
   }
 
-  let allowedWords = [
-    
-  ]
-
   async function search() {
     let url = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages&exintro&explaintext&format=json&origin=*&titles=${encodeURIComponent(searchValue)}&piprop=thumbnail&pithumbsize=300`;
     fetchData(url);
@@ -89,6 +85,21 @@
 
 </main>
 
+<footer>
+  <section class="footer-content">
+      <h2>Impressum</h2>
+    
+  </section>
+  <section class="footer-content">
+      <h2>Datenschutz</h2>
+      
+  </section>
+  <section class="footer-content">
+      <h2>Owner Information</h2>
+     
+  </section>
+</footer>
+
 <style>
   .content {
     margin-top: 20px;
@@ -115,5 +126,14 @@
     max-width: 100%;
     height: auto;
     margin-top: 10px;
+  }
+  footer {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 2rem;
+      text-align: left;
+  }
+
+  .footer-content {
+      margin-bottom: 1rem;
   }
 </style>
