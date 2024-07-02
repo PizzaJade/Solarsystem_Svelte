@@ -29,7 +29,7 @@
 
   function handleShortDescription(event) {
     const { selectedText } = event.detail;
-    push(`/explore/?query=${encodeURIComponent(selectedText)}`);
+    push(`/explore?query=${encodeURIComponent(selectedText)}`);
     showPopup = false;
   }
 

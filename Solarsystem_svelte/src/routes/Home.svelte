@@ -36,17 +36,17 @@
   </script>
   
   <main>
-    <section>
+    <section class="apod-canvas">
       <canvas bind:this={canvas} id="canvas3d" width="400" height="100"></canvas>
     </section>
   
     {#if payload}
-      <section class="apod-container">
+      <section class="apod-container debug">
         <div class="apod-text">
           <h1>Astronomy Picture of the Day</h1>
           <h2>{payload.title}</h2>
           <p>{payload.date}</p>
-          <p>{payload.explanation}</p>
+          <p class="apod-explanation">{payload.explanation}</p>
         </div>
         <div class="apod-image">
           {#if payload.media_type === 'image'}
@@ -99,17 +99,28 @@
       display: flex;
       align-items: flex-start;
       justify-content: flex-start;
-      margin-top: 1rem;
+      margin-top: 6rem;
+      margin: 5rem auto 0;
+      max-width: 1680px;
     }
   
     .apod-text {
       flex: 1;
       margin-right: 1rem;
     }
+
+    .apod-text p:last-child {
+        max-width: 70ch;
+    }
   
     .apod-image {
       max-width: 400px;
       flex-shrink: 0;
+    }
+
+    .apod-image img, .apod-image iframe {
+        align-self: center;
+        justify-self: center;
     }
   
     img {

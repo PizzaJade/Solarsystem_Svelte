@@ -1,5 +1,8 @@
 <script>
   import { onMount } from 'svelte';
+  import { getQueryValue } from "../lib/js/functions.js";
+
+  export let params;
 
   let payload = '';
   let searchValue = '';
@@ -37,14 +40,18 @@
     }
   }
 
+  let allowedWords = [
+    
+  ]
+
   async function search() {
     let url = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages&exintro&explaintext&format=json&origin=*&titles=${encodeURIComponent(searchValue)}&piprop=thumbnail&pithumbsize=300`;
     fetchData(url);
   }
 
   onMount(() => {
-    const params = new URLSearchParams(window.location.search);
-    const query = params.get('query');
+    const query = getQueryValue(window.location.href)
+
     if (query) {
       searchValue = query;
       search();
