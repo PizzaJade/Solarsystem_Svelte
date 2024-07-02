@@ -1,34 +1,33 @@
-<!-- src/components/Popup.svelte -->
 <script>
     import { createEventDispatcher } from 'svelte';
-  
+    
     export let selectedText = '';
     const dispatch = createEventDispatcher();
     let showOptions = false;
-  
+    
     function handleWikipedia() {
       showOptions = true;
     }
-  
+    
     function handleShortDescription() {
       dispatch('shortDescription', { selectedText });
     }
-  
+    
     function handleFullArticle() {
       const url = `https://en.wikipedia.org/wiki/${encodeURIComponent(selectedText)}`;
       window.open(url, '_blank');
       dispatch('close');
     }
-  
+    
     function handleAIChat() {
       window.open(`/#/basics?query=${encodeURIComponent(selectedText)}`, '_blank');
       dispatch('close');
     }
   </script>
-  
+    
   <div class="popup">
     {#if !showOptions}
-      <p>You selected <strong>{selectedText}</strong>.</p>
+      <p>You have selected <strong>{selectedText}</strong>.</p>
       <button on:click={handleWikipedia}>Wikipedia</button>
       <button on:click={handleAIChat}>AI Chat Bot</button>
       <button on:click={() => dispatch('close')}>Close</button>
@@ -38,7 +37,7 @@
       <button on:click={handleFullArticle}>Full Article</button>
     {/if}
   </div>
-  
+    
   <style>
     .popup {
       position: fixed;

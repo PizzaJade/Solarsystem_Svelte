@@ -1,4 +1,3 @@
-<!-- src/routes/Explore.svelte -->
 <script>
   import { onMount } from 'svelte';
 
@@ -39,7 +38,7 @@
   }
 
   async function search() {
-    let url = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages&exintro&explaintext&format=json&origin=*&titles=${searchValue}&piprop=thumbnail&pithumbsize=300`;
+    let url = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts|pageimages&exintro&explaintext&format=json&origin=*&titles=${encodeURIComponent(searchValue)}&piprop=thumbnail&pithumbsize=300`;
     fetchData(url);
   }
 
