@@ -69,7 +69,7 @@
     bind:value={searchValue}
     on:change={search}
   />
-
+  
   {#if loading}
     <div aria-busy={true} style="width: 100%; height: 300px" class="debug">
       Loading...
@@ -79,13 +79,14 @@
   {:else if payload}
     <div class="content">
       {#each images as image}
-        <img src={image} alt="Related image" />
+        <p><img src={image} alt="Related image" /></p>
       {/each}
       <p>{payload}</p>
     </div>
   {:else if payloadEmpty}
     <p class="error">No results found for {searchValue}</p>
   {/if}
+
 </main>
 
 <style>
