@@ -39,6 +39,7 @@ Implementierung von SSE zur Echtzeitkommunikation.
 Quellen und Ressourcen
 
 NASA API: https://api.nasa.gov
+
 Spline Design Community: https://app.spline.design/community/search?query=planet&sort=trending
 
 OpenAI ChatGPT und Whisper APIs: https://openai.com/index/introducing-chatgpt-and-whisper-apis/
