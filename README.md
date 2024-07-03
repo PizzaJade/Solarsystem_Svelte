@@ -40,6 +40,9 @@ Quellen und Ressourcen
 
 NASA API: https://api.nasa.gov
 Spline Design Community: https://app.spline.design/community/search?query=planet&sort=trending
+
 OpenAI ChatGPT und Whisper APIs: https://openai.com/index/introducing-chatgpt-and-whisper-apis/
+
 Framework PicoCSS: https://picocss.com
+
 Particle Nebula 3D Source: https://app.spline.design/community/file/cea96ce0-da30-46cc-bd5c-dc73a6497abd
